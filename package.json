@@ -1,0 +1,30 @@
+{
+  "name": "reviews-module",
+  "version": "1.0.0",
+  "description": "FEC for Hack Reactor GHRSEA01",
+  "main": "index.js",
+  "scripts": {
+    "react-dev": "webpack -d --watch",
+    "server-dev": "nodemon server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghrsea-bowsers-castle/Reviews-Module.git"
+  },
+  "author": "Chris Broveleit",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ghrsea-bowsers-castle/Reviews-Module/issues"
+  },
+  "homepage": "https://github.com/ghrsea-bowsers-castle/Reviews-Module#readme",
+  "dependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.5",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5",
+    "webpack": "^4.29.6"
+  }
+}
