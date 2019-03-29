@@ -36,27 +36,38 @@ const generateReviews = () => {
             })
         )
     };
-      
-      var output = [];
-      users.forEach( (user) => {
-          var review = {}
-          review = {
-            reviewer: user.username,
+
+    const assignRandomUser = ()=> {
+        var randomIndex = Math.floor(Math.random() * Math.floor(users.length-1))
+        return randomIndex;
+    }
+    const createUsersReview = (listingID) => {
+        var review = {}
+        review = {
+            reviewer: assignRandomUser(),
+            listing: listingID,
             date: randomDate(),
             body: generateReviewBody(),
-            overall_rating: createRandomReview(), 
+            overall_rating: createRandomReview(),
+            accuracy_rating: createRandomReview(),
             communication_rating: createRandomReview(),
             cleanliness_rating: createRandomReview(),
             location_rating: createRandomReview(),
             checkin_rating: createRandomReview(),
             value_rating: createRandomReview()
-          };
-          output.push(review);
-      })
-
+        };
+        return review;
+    }
+    var output = [] 
+    for(var j = 0; j < words.listings.length; j++ ){
+        var randomNumberOfReviews = Math.floor(Math.random() * Math.floor(30))
+        for(var i = 0; i < randomNumberOfReviews; i++){
+           output.push(createUsersReview(words.listings[j].id));
+        }
+    };
     return output; 
 }
 
 var reviewsToImport = generateReviews ();
-console.log(reviewsToImport.length);
-console.log(words.listings.length); 
+// console.log(reviewsToImport.map(e => e.reviewer));
+module.exports = reviewsToImport;

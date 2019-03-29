@@ -23,28 +23,29 @@ const generateListings = () => {
     var output = []
     var randomLength= () =>{ return Math.floor(Math.random()*Math.floor(6)+2) }
     for(var i  = 0; i < 101; i++){
-        output.push(       
-            loremIpsum({
-            count: randomLength(),                // Number of "words", "sentences", or "paragraphs"
-            format: "plain",         // "plain" or "html"
-            paragraphLowerBound: 3,  // Min. number of sentences per paragraph.
-            paragraphUpperBound: 7,  // Max. number of sentences per paragarph.
-            random: Math.random,     // A PRNG function
-            sentenceLowerBound: 5,   // Min. number of words per sentence.
-            sentenceUpperBound: 15,  // Max. number of words per sentence.
-            suffix: "\n",            // Line ending, defaults to "\n" or "\r\n" (win32)
-            units: "words",      // paragraph(s), "sentence(s)", or "word(s)"       
-            words: titleWords // Array of words to draw from
-            })
-            )
+        output.push({
+            id: i+1,
+            title: loremIpsum({
+                count: randomLength(),                // Number of "words", "sentences", or "paragraphs"
+                format: "plain",         // "plain" or "html"
+                paragraphLowerBound: 3,  // Min. number of sentences per paragraph.
+                paragraphUpperBound: 7,  // Max. number of sentences per paragarph.
+                random: Math.random,     // A PRNG function
+                sentenceLowerBound: 5,   // Min. number of words per sentence.
+                sentenceUpperBound: 15,  // Max. number of words per sentence.
+                suffix: "\n",            // Line ending, defaults to "\n" or "\r\n" (win32)
+                units: "words",      // paragraph(s), "sentence(s)", or "word(s)"       
+                words: titleWords // Array of words to draw from
+                })
+        });
     }
     return output;
 }
 
 var listings = generateListings(); 
+
 var reviewWords = createReviewWords();
 
-console.log(listings);
 
 module.exports.reviewWords = reviewWords; 
 module.exports.listings = listings;

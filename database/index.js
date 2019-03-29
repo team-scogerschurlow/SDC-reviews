@@ -1,11 +1,4 @@
-const { Client } = require('pg');
-const client = new Client();
-
-client.connect();
-
-client.query('SELECT $1::text as message', ['hello world'], (err, result)=> {
-    console.log(err ? err.stack : res.rows[0].message) // Hello World!
-    client.end()
-});
-
-
+const env = process.env.NODE_ENV || 'development' ; 
+const config = require('../knexfile.js')[env] ; 
+const knex = require('knex');
+module.exports = knex(config);

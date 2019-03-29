@@ -3203,8 +3203,9 @@ var users = [
 
 cleanUsers = (arrayOfUsers)=>{
     var output = [];
-    arrayOfUsers.forEach( (user) => {
+    arrayOfUsers.forEach( (user, index) => {
         var userObj = {};
+        userObj['id'] = index +1;
         userObj['username'] = user.login.username;
         userObj['profilePic'] = user.picture.thumbnail;
         output.push(userObj);
