@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Reviews from './components/Reviews.jsx'
 import Stars from './components/Stars.jsx'
+import PageNavBar from './components/PagesOfReviews.jsx'
 
 const findRatingsAverage = (array)=> {
     var output = {}
@@ -40,7 +41,12 @@ class App extends React.Component{
         this.state = {
             listing: Number(document.URL.slice(-3).slice(0,2)),
             reviews: [],
-            search: '',
+            totalReviews: 0,
+            offset: 0,
+            searchTerm: '',
+            termSearched: '',
+            searchResults: 0,
+            hasSearched: false,
             ratings: {
                 overall_rating: 5,
                 accuracy_rating: 5,
@@ -51,30 +57,68 @@ class App extends React.Component{
                 value_rating: 5
             }
         }
+        this.loadAllReviews = this.loadAllReviews.bind(this);
         this.searchTermUpdate = this.searchTermUpdate.bind(this);
-        this.submitSearchTerm = this.submitSearchTerm.bind(this)
+        this.submitSearchTerm = this.submitSearchTerm.bind(this);
+        this.loadMoreReviews = this.loadMoreReviews.bind(this);
     }
 
     submitSearchTerm(e){
         e.preventDefault();
-        console.log(this.state.search)
+        axios.get(`/listings/${this.state.listing}/reviews?search=${this.state.searchTerm}`).then( (result)=> {
+            this.setState({
+                termSearched: this.state.searchTerm,
+                hasSearched: true,
+                reviews: result.data.reviews,
+                searchResults: result.data.searchCount
+            });
+        })
     }
 
     searchTermUpdate(e){
         var query = e.target.value;
         this.setState({
-            search: query
+            searchTerm: query
         })
     }
 
-    componentWillMount(){
-        axios.get(`/api/${this.state.listing}`).then( (result)=> {
-            var ratingsSummary = findRatingsAverage(result.data);
+    loadMoreReviews(e){
+        var offSet = e.target.value;
+        if(this.state.hasSearched === false){
+            axios.get(`/listings/${this.state.listing}/page?offset=${offSet}`)
+            .then( (result)=>{
+                this.setState({
+                    reviews: result.data.reviews
+                })
+            })
+        }
+
+        if(this.state.hasSearched === true){
+            axios.get(`/listings/${this.state.listing}/page?offset=${offSet}&search=${this.state.termSearched}`)
+            .then( (result)=>{
+                this.setState({
+                    reviews: result.data.reviews
+                })
+            })
+        }
+    }
+
+    loadAllReviews(){
+        this.setState({
+            hasSearched: false,
+        })
+        axios.get(`/listings/${this.state.listing}`).then( (result)=> {
+            var ratingsSummary = findRatingsAverage(result.data.reviews);
              this.setState({
-                reviews: result.data,
-                ratings: ratingsSummary
+                reviews: result.data.reviews,
+                ratings: ratingsSummary,
+                totalReviews: result.data.reviewCount
              })
         });
+    }
+
+    componentWillMount(){
+        this.loadAllReviews();
     }
 
 
@@ -83,48 +127,62 @@ class App extends React.Component{
             <div className = "reviews-container">
                 <div className = "listings-reviews-header">
                     <div className = "reviews-overview">
-                        <h2> {this.state.reviews.length} Reviews </h2>
+                        <h2> {this.state.totalReviews} Reviews </h2>
                         <Stars starCount = {this.state.ratings.overall_rating}/>
                     </div>
                     <form className= "search-form" onSubmit= {this.submitSearchTerm}>
                         <input placeholder= "Search Reviews" type= "text" onChange ={(e)=> this.searchTermUpdate(e)} onSubmit ={this.submitSearchTerm}></input>
                     </form>
                 </div>
-                <div className = "rating-breakdown">
-                    <div className = "ratings-left">
-                        <div id = "Accuracy-rating" className = "ratings-detail">
-                            <h3>Accuracy</h3>
-                            <Stars starCount = {this.state.ratings.accuracy_rating}/>
+                {!this.state.hasSearched &&
+                    <div className = "rating-breakdown">
+                        <div className = "ratings-left">
+                            <div id = "Accuracy-rating" className = "ratings-detail">
+                                <h3>Accuracy</h3>
+                                <Stars starCount = {this.state.ratings.accuracy_rating}/>
+                            </div>
+                            <div id = "Communication-rating" className = "ratings-detail">
+                                <h3>Communication</h3>
+                                <Stars starCount = {this.state.ratings.communication_rating}/>
+                            </div>
+                            <div id = "Accuracy-rating" className = "ratings-detail">
+                                <h3>Cleanliness</h3>
+                                <Stars starCount = {this.state.ratings.cleanliness_rating}/>
+                            </div>
                         </div>
-                        <div id = "Communication-rating" className = "ratings-detail">
-                            <h3>Communication</h3>
-                            <Stars starCount = {this.state.ratings.communication_rating}/>
-                        </div>
-                        <div id = "Accuracy-rating" className = "ratings-detail">
-                            <h3>Cleanliness</h3>
-                            <Stars starCount = {this.state.ratings.cleanliness_rating}/>
+                        <div className = "ratings-right">
+                            <div id = "Accuracy-rating" className = "ratings-detail"> 
+                                <h3>Location</h3>
+                                <Stars starCount = {this.state.ratings.location_rating}/>
+                            </div>
+                            <div id = "Communication-rating" className = "ratings-detail">
+                                <h3>Check-in</h3>
+                                <Stars starCount = {this.state.ratings.checkin_rating}/>
+                            </div>
+                            <div id = "Accuracy-rating" className = "ratings-detail">
+                                <h3>Value</h3>
+                                <Stars starCount = {this.state.ratings.value_rating}/>
+                            </div>
                         </div>
                     </div>
-                    <div className = "ratings-right">
-                        <div id = "Accuracy-rating" className = "ratings-detail"> 
-                            <h3>Location</h3>
-                            <Stars starCount = {this.state.ratings.location_rating}/>
-                        </div>
-                        <div id = "Communication-rating" className = "ratings-detail">
-                            <h3>Check-in</h3>
-                            <Stars starCount = {this.state.ratings.checkin_rating}/>
-                        </div>
-                        <div id = "Accuracy-rating" className = "ratings-detail">
-                            <h3>Value</h3>
-                            <Stars starCount = {this.state.ratings.value_rating}/>
-                        </div>
-                    </div>
+                }
+                {this.state.hasSearched && 
+                <div className = "searchSummary">
+                    <p>{this.state.searchResults} guests have mentioned "{this.state.termSearched}"</p>
+                    <p className = "exit-search" onClick= {this.loadAllReviews}>Back to all reviews</p>
                 </div>
+                }
                 <ul className = 'reviews-given'>
                 {this.state.reviews.map((review)=> {
                     return <Reviews body= {review.body} username = {review.username} key = {review.id} profilePic = {review.profilePic} date = {review.date}/>
                 })}
                 </ul>
+                {!this.state.hasSearched && 
+                    <PageNavBar className = "page-nav-no-search" reviewCount = {this.state.totalReviews} nextPage = {()=> this.loadMoreReviews}/> 
+                }
+                {this.state.hasSearched && 
+                    <PageNavBar className = "search-nav" reviewCount = {this.state.searchResults} nextPage = {()=> this.loadMoreReviews}/> 
+                }
             </div>
         )
     }
