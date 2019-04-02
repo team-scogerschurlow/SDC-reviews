@@ -29,6 +29,7 @@
   "dependencies": {
     "knex": "^0.16.3",
     "lorem-ipsum": "^2.0.0",
+    "moment": "^2.24.0",
     "mysql": "^2.16.0",
     "react": "^16.8.5",
     "react-dom": "^16.8.5"

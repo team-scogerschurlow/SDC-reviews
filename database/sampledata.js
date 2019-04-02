@@ -38,7 +38,7 @@ const generateReviews = () => {
     };
 
     const assignRandomUser = ()=> {
-        var randomIndex = Math.floor(Math.random() * Math.floor(users.length-1))
+        var randomIndex = Math.floor(Math.random() * Math.floor(users.length-2))+1
         return randomIndex;
     }
     const createUsersReview = (listingID) => {

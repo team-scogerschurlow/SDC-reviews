@@ -1,0 +1,17 @@
+As a user I want: 
+    1. To see How many people have reviewed the place
+    2. To see what the Overall Rating is
+    3. See further rating details such as:
+        A. accuracy of the listing, 
+        B. the communication of the host,
+        C. Cleanliness of the place,
+        D. Location rating,
+        E. Check-in Process rating, 
+        F. Value of the rental
+    4. I want to see individual reviews of users who have stayed at the listing
+    5. I want to be able to click to see the whole review.
+        A. The Whole Body
+        B. The individual subratings
+    6. I want to be able to page through all the ratings, with the latest on top.
+    7. I want to be able to search the listings
+    

@@ -1,8 +1,8 @@
 const websiteText = require('../database/samplewords');
 
 
-var listings = websiteText.listings
-var autoIncrementChange = listings.length
+var listings = websiteText.listings;
+var autoIncrementChange = listings.length+1;
 
 exports.seed = function(knex, Promise) {
   console.log('Listings seed')
@@ -11,6 +11,6 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       return knex('listings').insert(listings);
     }).then( ()=> {
-      return knex.raw('ALTER TABLE listings AUTO_INCREMENT = 100')
+      return knex.raw(`ALTER TABLE listings AUTO_INCREMENT = ${autoIncrementChange}`)
     });
 };

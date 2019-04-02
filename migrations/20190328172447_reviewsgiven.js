@@ -1,9 +1,9 @@
 
 exports.up = function(knex, Promise) {
     return knex.schema.createTable('reviewsgiven', (table)=>{
-        table.increments('id')
-        table.integer('reviewer').references('id').inTable('users');
-        table.integer('listing').references('id').inTable('listings');
+        table.increments('id');
+        table.integer('reviewer').references('id').inTable('users').unsigned();
+        table.integer('listing').references('id').inTable('listings').unsigned();
         table.date('date');
         table.text('body');
         table.float('overall_rating');
