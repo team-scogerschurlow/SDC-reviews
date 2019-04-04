@@ -34,12 +34,17 @@ const findRatingsAverage = (array)=> {
     }
     return output; 
 }
-
+const getListingId = (url) =>{
+   var listingEnding = url.slice(-4).split('');
+   listingEnding = listingEnding.filter( (element) => element != '/');
+   listingEnding = listingEnding.join('')
+   return Number(listingEnding)
+}
 class App extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            listing: Number(document.URL.slice(-3).slice(0,2)),
+            listing: getListingId(document.URL),
             reviews: [],
             totalReviews: 0,
             offset: 0,
