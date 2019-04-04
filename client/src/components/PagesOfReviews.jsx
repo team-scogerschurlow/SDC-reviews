@@ -79,6 +79,15 @@ class PageNavBar extends React.Component {
         })
     }
 
+    componentWillMount(){
+        if(this.props.reviewCount< 11){
+            this.setState({
+                atBeginning: true,
+                atEnd: true
+            })
+        }
+    }
+
     render(){
         const createPages = (numberOfReviews, func)=>{
             var output = [];
