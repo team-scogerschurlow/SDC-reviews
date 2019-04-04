@@ -82,10 +82,10 @@ class App extends React.Component{
         })
     }
 
-    loadMoreReviews(e){
-        var offSet = e.target.value;
+    loadMoreReviews(offset){
+        console.log(offset);
         if(this.state.hasSearched === false){
-            axios.get(`/listings/${this.state.listing}/page?offset=${offSet}`)
+            axios.get(`/listings/${this.state.listing}/page?offset=${offset}`)
             .then( (result)=>{
                 this.setState({
                     reviews: result.data.reviews
@@ -94,7 +94,7 @@ class App extends React.Component{
         }
 
         if(this.state.hasSearched === true){
-            axios.get(`/listings/${this.state.listing}/page?offset=${offSet}&search=${this.state.termSearched}`)
+            axios.get(`/listings/${this.state.listing}/page?offset=${offset}&search=${this.state.termSearched}`)
             .then( (result)=>{
                 this.setState({
                     reviews: result.data.reviews
@@ -178,10 +178,10 @@ class App extends React.Component{
                 })}
                 </ul>
                 {!this.state.hasSearched && 
-                    <PageNavBar className = "page-nav-no-search" reviewCount = {this.state.totalReviews} nextPage = {()=> this.loadMoreReviews}/> 
+                    <PageNavBar className = "page-nav-no-search" reviewCount = {this.state.totalReviews} nextPage = {this.loadMoreReviews}/> 
                 }
                 {this.state.hasSearched && 
-                    <PageNavBar className = "search-nav" reviewCount = {this.state.searchResults} nextPage = {()=> this.loadMoreReviews}/> 
+                    <PageNavBar className = "search-nav" reviewCount = {this.state.searchResults} nextPage = {this.loadMoreReviews}/> 
                 }
             </div>
         )
