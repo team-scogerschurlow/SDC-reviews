@@ -75,8 +75,7 @@ class PageNavBar extends React.Component {
         this.setState({
             currentPage: this.state.currentPage+1,
             atBeginning: false,
-            //this is broken
-            atEnd: (Math.floor(this.props.reviewCount/10))/this.state.currentPage+1 === 1
+            atEnd: (Math.floor(this.props.reviewCount/10))/(this.state.currentPage+1) === 1
         })
     }
 
@@ -95,9 +94,13 @@ class PageNavBar extends React.Component {
         return (
             <div className = "reviews-nav-bar">
                 <ul className = "pages-of-reviews">
-                    <li id= "back-button" onClick = {this.goBackClick}>{backbutton}</li>
+                    {!this.state.atBeginning &&
+                        <li id= "back-button" onClick = {this.goBackClick}>{backbutton}</li>
+                    }
                     {createPages(this.props.reviewCount,(e)=>{this.handleClick(e)})}
-                    <li id= "forward-button" onClick ={this.goForwardClick}>{forwardButton}</li>
+                    {!this.state.atEnd &&
+                        <li id= "forward-button" onClick ={this.goForwardClick}>{forwardButton}</li>
+                    }
                 </ul>
             </div>
         );

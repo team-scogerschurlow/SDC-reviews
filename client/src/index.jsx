@@ -83,7 +83,6 @@ class App extends React.Component{
     }
 
     loadMoreReviews(offset){
-        console.log(offset);
         if(this.state.hasSearched === false){
             axios.get(`/listings/${this.state.listing}/page?offset=${offset}`)
             .then( (result)=>{
