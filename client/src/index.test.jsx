@@ -3,13 +3,10 @@ import { shallow } from 'enzyme';
 
 import App from './index.jsx';
 
-function setup() {
-  const props = {
-    imgPath: 'some/image/path/to/a/mock/image',
-  };
-  const wrapper = shallow(<App />);
-  return { wrapper, props };
-}
+it('App', () => {
+  const app = shallow(<App />);
+  expect(1).toEqual(1);
+});
 
 describe('App Test Suite', () => {
   it('Should have an image', () => {

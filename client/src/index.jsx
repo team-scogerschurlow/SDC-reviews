@@ -4,6 +4,7 @@ import axios from 'axios';
 import Reviews from './components/Reviews.jsx'
 import Stars from './components/Stars.jsx'
 import PageNavBar from './components/PagesOfReviews.jsx'
+require('./style.css')
 
 const findRatingsAverage = (array)=> {
     var output = {}
@@ -192,4 +193,4 @@ class App extends React.Component{
     }
 }
 
-ReactDOM.render(<App />, document.getElementById('reviews'));
+export default App;
