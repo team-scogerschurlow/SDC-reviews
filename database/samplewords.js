@@ -19,10 +19,11 @@ const createReviewWords = () => {
     return array1.concat(array2);
 }
 
-const generateListings = () => {
+const generateListings = (inputNum) => {
+    
     var output = []
     var randomLength= () =>{ return Math.floor(Math.random()*Math.floor(6)+2) }
-    for(var i  = 0; i < 101; i++){
+    for(var i  = 0; i < inputNum; i++){
         output.push({
             id: i+1,
             title: loremIpsum({
@@ -42,7 +43,7 @@ const generateListings = () => {
     return output;
 }
 
-var listings = generateListings(); 
+var listings = generateListings(101); 
 
 var reviewWords = createReviewWords();
 
