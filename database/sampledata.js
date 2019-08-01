@@ -70,4 +70,4 @@ const generateReviews = () => {
 
 var reviewsToImport = generateReviews ();
 // console.log(reviewsToImport.map(e => e.reviewer));
-module.exports = reviewsToImport;
+// module.exports = reviewsToImport;

@@ -27,7 +27,7 @@ const generateListings = (inputNum) => {
         output.push({
             id: i+1,
             title: loremIpsum({
-                count: randomLength(),                // Number of "words", "sentences", or "paragraphs"
+                count: randomLength(),   // Number of "words", "sentences", or "paragraphs"
                 format: "plain",         // "plain" or "html"
                 paragraphLowerBound: 3,  // Min. number of sentences per paragraph.
                 paragraphUpperBound: 7,  // Max. number of sentences per paragarph.
