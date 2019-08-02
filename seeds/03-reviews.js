@@ -11,6 +11,7 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       return knex('reviewsgiven').insert(reviews);
     }).then( () => {
-      return knex.raw(`ALTER TABLE listings AUTO_INCREMENT = ${autoIncrementChange}`)
+      return knex.raw(`SELECT setval('reviewsgiven_id_seq ', (SELECT MAX(id) FROM reviewsgiven));`)
+      // return knex.raw(`ALTER TABLE listings AUTO_INCREMENT = ${autoIncrementChange}`)
     });
 };

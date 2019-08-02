@@ -1,6 +1,5 @@
 var users = require('../database/sampleusers');
 
-
 var autoIncrementChange = users.length+1;
 
 exports.seed = function(knex, Promise) {
@@ -9,6 +8,7 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       return knex('users').insert(users);
     }).then( ()=> {
-      return knex.raw(`ALTER TABLE listings AUTO_INCREMENT = ${autoIncrementChange}`)
+      return knex.raw(`SELECT setval('users_id_seq ', (SELECT MAX(id) FROM users));`)
+      // return knex.raw(`ALTER TABLE listings AUTO_INCREMENT = ${autoIncrementChange}`)
     });
 };
