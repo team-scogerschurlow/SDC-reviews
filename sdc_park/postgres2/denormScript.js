@@ -11,8 +11,8 @@ const inputRow = (start, end) => {
 
 const appendCSV = (m) => {
   for (let i = 0; i < m; i++) {
-    reviewsgiven = inputRow(i * 100000, i * 100000 + 100000)
-    appendFileSync(__dirname + '/reviewsgiven.csv', reviewsgiven)
+    denorm = inputRow(i * 100000, i * 100000 + 100000)
+    appendFileSync(__dirname + '/denorm.csv', denorm)
   }
 }
 

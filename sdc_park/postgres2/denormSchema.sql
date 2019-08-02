@@ -1,7 +1,10 @@
-CREATE TABLE reviewsgiven (
+CREATE TABLE denorm (
   id SERIAL PRIMARY KEY,
-  reviewer_id INTEGER REFERENCES users(id),
-  listing_id INTEGER REFERENCES listings(id),
+  reviewer_id INTEGER NOT NULL,
+  reviewer_title VARCHAR NOT NULL,
+  reviewer_picture VARCHAR NOT NULL,
+  listing_id INTEGER NOT NULL,
+  listing_name VARCHAR NOT NULL,
   date VARCHAR NOT NULL,
   body VARCHAR NOT NULL,
   overall_rating FLOAT NOT NULL,
