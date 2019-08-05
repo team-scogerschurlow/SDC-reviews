@@ -6,11 +6,13 @@
   "scripts": {
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js",
+    "sdc-server": "nodemon sdc_park/sdcindex.js",
     "knex": "knex",
     "latest": "knex migrate:latest",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage --colors"
+    "test:coverage": "jest --coverage --colors",
+    "mongo": "node /Users/pwrmvs/SDC-reviews/sdc_park/mongo/index.js"
   },
   "repository": {
     "type": "git",
@@ -39,6 +41,7 @@
     "webpack": "^4.37.0"
   },
   "dependencies": {
+    "artillery": "^1.6.0-28",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "express": "^4.17.1",
@@ -47,6 +50,7 @@
     "knex": "^0.16.5",
     "lorem-ipsum": "^2.0.0",
     "moment": "^2.24.0",
+    "mongoose": "^5.6.8",
     "mysql": "^2.17.1",
     "pg": "^7.11.0",
     "react": "^16.8.5",
